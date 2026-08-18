@@ -1765,6 +1765,8 @@ a {
 
 .gallery[data-rendered="false"] > *,
 .products-grid[data-rendered="false"] > *,
-.parts-grid[data-rendered="false"] > * {
+.parts-grid[data-rendered="false"] > *,
+.team-grid[data-rendered="false"] > *,
+.hero-image[data-rendered="false"] img {
     display: none;
 }

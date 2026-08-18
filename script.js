@@ -236,6 +236,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getDefaultSeedData() {
         const seed = structuredClone(defaultSiteData);
+        seed.heroImage = "";
+        seed.galleryImages = [];
+        seed.motos = [];
+        seed.parts = [];
+        seed.team = [];
+        seed.news = [];
 
         try {
             const savedDefault = localStorage.getItem(DEFAULT_STORAGE_KEY);
@@ -444,9 +450,16 @@ document.addEventListener("DOMContentLoaded", () => {
         applySiteSettings(data.siteSettings);
 
         const heroImage = document.querySelector(".hero-image img");
+        const heroContainer = document.querySelector(".hero-image");
 
-        if (heroImage && data.heroImage) {
-            heroImage.src = data.heroImage;
+        if (heroImage && heroContainer) {
+            heroImage.hidden = !data.heroImage;
+
+            if (data.heroImage) {
+                heroImage.src = data.heroImage;
+            }
+
+            heroContainer.dataset.rendered = "true";
         }
 
         const gallery = document.querySelector(".gallery");
@@ -558,6 +571,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 </article>
             `).join("");
+            teamGrid.dataset.rendered = "true";
         }
 
         const newsGrid = document.querySelector(".news-grid");
