@@ -68,4 +68,4 @@ Para conectar GitHub Pages con la API, edita `config.js` antes de subir los arch
 window.GHOST_API_URL = "https://tu-api-publica.example.com";
 ```
 
-Sube también la carpeta `IMG` completa, incluyendo `IMG/logo.png`. La ruta y las mayúsculas deben conservarse exactamente, porque GitHub Pages distingue entre `IMG/logo.png` e `img/logo.png`.
+Sube también `logo.png` en la raíz del repositorio. Las páginas usan la ruta `logo.png`.
