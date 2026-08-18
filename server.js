@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const app = express();
 const PORT = Number(process.env.PORT || 3000);
+const eventClients = new Set();
 
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
@@ -144,12 +145,21 @@ async function saveSiteData(payload) {
     }
 
     await connection.commit();
+    broadcastSiteUpdate();
     return true;
   } catch (error) {
     await connection.rollback();
     throw error;
   } finally {
     connection.release();
+  }
+}
+
+function broadcastSiteUpdate() {
+  const message = `event: site-updated\ndata: ${JSON.stringify({ updatedAt: new Date().toISOString() })}\n\n`;
+
+  for (const client of eventClients) {
+    client.write(message);
   }
 }
 
@@ -171,10 +181,32 @@ app.get('/api/site', async (req, res) => {
   }
 });
 
+app.get('/api/events', (req, res) => {
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache, no-transform',
+    Connection: 'keep-alive',
+    'Access-Control-Allow-Origin': '*'
+  });
+  res.write(`event: connected\ndata: ${JSON.stringify({ connectedAt: new Date().toISOString() })}\n\n`);
+  eventClients.add(res);
+
+  const heartbeat = setInterval(() => {
+    res.write(': heartbeat\n\n');
+  }, 25000);
+
+  req.on('close', () => {
+    clearInterval(heartbeat);
+    eventClients.delete(res);
+    res.end();
+  });
+});
+
 app.post('/api/visit', async (req, res) => {
   try {
     await pool.query('UPDATE site_settings SET visitor_count = visitor_count + 1 WHERE id = (SELECT id FROM (SELECT id FROM site_settings ORDER BY id DESC LIMIT 1) AS latest)');
     const [rows] = await pool.query('SELECT visitor_count FROM site_settings ORDER BY id DESC LIMIT 1');
+    broadcastSiteUpdate();
     res.json({ visitorCount: Number(rows[0]?.visitor_count || 0) });
   } catch (error) {
     console.error('Error al registrar visita:', error);

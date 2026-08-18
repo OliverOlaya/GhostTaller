@@ -411,6 +411,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function subscribeToLiveUpdates() {
+        if (!API_BASE_URL || !window.EventSource) {
+            return;
+        }
+
+        const events = new EventSource(`${API_BASE_URL}/api/events`);
+        events.addEventListener("site-updated", () => {
+            renderSiteContent();
+        });
+        events.onerror = () => {
+            events.close();
+        };
+    }
+
     window.renderSiteContent = async function renderSiteContent() {
         const data = await getSiteData();
         applySiteSettings(data.siteSettings);
@@ -550,6 +564,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderSiteContent();
     trackVisit();
+    subscribeToLiveUpdates();
 
     // Detectar cambios en localStorage y re-renderizar
     window.addEventListener('storage', (event) => {

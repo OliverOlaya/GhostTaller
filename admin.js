@@ -246,6 +246,21 @@ function showAdminNotice(message, type = "success") {
     }, 3600);
 }
 
+function subscribeToLiveAdminUpdates() {
+    if (!API_BASE_URL || !window.EventSource) {
+        return;
+    }
+
+    const events = new EventSource(`${API_BASE_URL}/api/events`);
+    events.addEventListener("site-updated", () => {
+        loadContent();
+        showAdminNotice("El sitio fue actualizado por otro administrador.");
+    });
+    events.onerror = () => {
+        events.close();
+    };
+}
+
 async function fetchJson(path, options = {}) {
     const response = await fetch(`${API_BASE_URL}${path}`, {
         headers: {
@@ -1488,6 +1503,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     setupAdminNavigation();
     applyPermissionsAccess();
+    subscribeToLiveAdminUpdates();
 
     if (heroImageInput) {
         heroImageInput.addEventListener("change", () => {
