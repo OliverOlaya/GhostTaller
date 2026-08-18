@@ -463,6 +463,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     `;
                 })
                 .join("");
+            gallery.dataset.rendered = "true";
         }
 
         const motosGrid = document.getElementById("motosGrid");
@@ -497,6 +498,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }).join("");
 
             motosGrid.innerHTML = cardsHtml;
+            motosGrid.dataset.rendered = "true";
 
             if (motosCount) {
                 motosCount.textContent = data.motos.length;
@@ -530,6 +532,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `).join("");
 
             partsGrid.innerHTML = cardsHtml;
+            partsGrid.dataset.rendered = "true";
 
             if (partsCount) {
                 partsCount.textContent = data.parts.length;
