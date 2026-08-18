@@ -342,30 +342,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            const saved = localStorage.getItem(STORAGE_KEY);
+            if (window.location.protocol === "file:") {
+                const saved = localStorage.getItem(STORAGE_KEY);
 
-            if (saved) {
-                try {
-                    const parsed = JSON.parse(saved);
-                    const normalized = normalizeSiteData(parsed);
+                if (saved) {
+                    try {
+                        const parsed = JSON.parse(saved);
+                        const normalized = normalizeSiteData(parsed);
+
+                        if (Array.isArray(normalized.motos) && Array.isArray(normalized.parts) && Array.isArray(normalized.team)) {
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+                            return normalized;
+                        }
+                    } catch (error) {
+                        // Fallback
+                    }
+                }
+
+                const savedDb = await getGhostSiteData();
+
+                if (savedDb) {
+                    const normalized = normalizeSiteData(savedDb);
 
                     if (Array.isArray(normalized.motos) && Array.isArray(normalized.parts) && Array.isArray(normalized.team)) {
                         localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
                         return normalized;
                     }
-                } catch (error) {
-                    // Fallback
-                }
-            }
-
-            const savedDb = await getGhostSiteData();
-
-            if (savedDb) {
-                const normalized = normalizeSiteData(savedDb);
-
-                if (Array.isArray(normalized.motos) && Array.isArray(normalized.parts) && Array.isArray(normalized.team)) {
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
-                    return normalized;
                 }
             }
 
