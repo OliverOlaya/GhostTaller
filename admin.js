@@ -833,6 +833,21 @@ function collectSiteSettings() {
     };
 }
 
+async function exportSiteData() {
+    const data = await getSiteData();
+    const file = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(file);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "site-data.json";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    showAdminNotice("Datos exportados. Sube site-data.json al repositorio de GitHub.");
+}
+
 function renderGalleryPreview(images) {
     const galleryPreview = document.getElementById("galleryPreview");
 
@@ -1486,6 +1501,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const addTeamBtn = document.getElementById("addTeamBtn");
     const addNewsBtn = document.getElementById("addNewsBtn");
     const saveDefaultDataBtn = document.getElementById("saveDefaultDataBtn");
+    const exportSiteDataBtn = document.getElementById("exportSiteDataBtn");
     const resetDataBtn = document.getElementById("resetDataBtn");
     const toggleWorkshopSettingsBtn = document.getElementById("toggleWorkshopSettingsBtn");
     const workshopSettingsEditor = document.getElementById("workshopSettingsEditor");
@@ -1572,6 +1588,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (saveDefaultDataBtn) {
         saveDefaultDataBtn.addEventListener("click", saveDefaultData);
+    }
+
+    if (exportSiteDataBtn) {
+        exportSiteDataBtn.addEventListener("click", exportSiteData);
     }
 
     if (resetDataBtn) {

@@ -69,3 +69,5 @@ window.GHOST_API_URL = "https://tu-api-publica.example.com";
 ```
 
 Sube también `logo.png` en la raíz del repositorio. Las páginas usan la ruta `logo.png`.
+
+Para publicar los datos actuales sin backend, abre el panel, ve a **Datos** y pulsa **Exportar datos para publicar**. Sube el archivo descargado `site-data.json` a la raíz del repositorio. La página principal lo cargará automáticamente cuando no exista una API conectada.

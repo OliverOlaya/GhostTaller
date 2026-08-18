@@ -327,6 +327,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
+            try {
+                const staticResponse = await fetch("site-data.json", { cache: "no-store" });
+
+                if (staticResponse.ok) {
+                    const staticData = normalizeSiteData(await staticResponse.json());
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(staticData));
+                    return staticData;
+                }
+            } catch (error) {
+                // Continuar con los datos por defecto.
+            }
+
             return getDefaultSeedData();
         } catch (error) {
             return getDefaultSeedData();
