@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost Motors | Panel administrativo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+
+    <div class="auth-shell" id="loginScreen">
+        <form id="loginForm" class="auth-card">
+            <div class="auth-brand">
+                <div class="logo-brand">
+                    <img src="IMG/logo.png" alt="Ghost Motors logo" class="logo-image">
+                    <div class="logo-text">
+                        <span class="logo-main">GHOST</span>
+                        <span class="logo-sub">MOTORS</span>
+                    </div>
+                </div>
+            </div>
+
+            <h1>Panel administrativo</h1>
+
+            <label for="username">Usuario</label>
+            <input id="username" name="username" type="text" placeholder="Usuario" autocomplete="username">
+
+            <label for="password">Contraseña</label>
+            <input id="password" name="password" type="password" placeholder="••••••••" autocomplete="current-password">
+
+            <button type="submit" class="primary-btn">Ingresar</button>
+
+            <p id="loginError" class="error-text" aria-live="polite"></p>
+        </form>
+    </div>
+
+    <div class="admin-shell hidden" id="adminScreen">
+        <header class="admin-header">
+            <div class="admin-brand">
+                <img src="IMG/logo.png" alt="Ghost Motors logo" class="logo-image">
+                <div>
+                    <p class="eyebrow-admin">ADMINISTRACIÓN</p>
+                    <h2>Ghost Motors</h2>
+                </div>
+            </div>
+
+            <div class="admin-actions">
+                <a href="index.html" class="secondary-btn">Ver sitio</a>
+                <button type="button" id="logoutBtn" class="ghost-btn">Cerrar sesión</button>
+            </div>
+        </header>
+
+        <div class="admin-layout">
+            <nav class="admin-nav" aria-label="Navegación del panel administrativo">
+                <a href="#hero-panel" class="active" data-permission="hero">Inicio</a>
+                <a href="#gallery-panel" data-permission="gallery">Galería</a>
+                <a href="#moto-panel" data-permission="motos">Motos</a>
+                <a href="#parts-panel" data-permission="parts">Repuestos</a>
+                <a href="#team-panel" data-permission="team">Equipo</a>
+                <a href="#news-panel" data-permission="news">Noticias</a>
+                <a href="#reset-panel" data-permission="settings">Datos</a>
+                <a href="#permissions-panel" data-permission-admin>Permisos</a>
+            </nav>
+
+            <main class="admin-container">
+
+                <section class="panel-card" id="hero-panel" data-permission-panel="hero">
+                <div class="panel-header">
+                    <h3>Imagen principal</h3>
+                    <button type="button" class="secondary-btn small" data-action="save-content">Guardar</button>
+                </div>
+
+                <div class="field-grid">
+                    <div class="field">
+                        <label for="heroImageInput">Selecciona la imagen principal</label>
+                        <input id="heroImageInput" type="file" accept="image/*">
+                        <div class="image-preview single">
+                            <img id="heroPreview" src="" alt="Vista previa de imagen principal">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel-card is-hidden" id="gallery-panel" data-permission-panel="gallery">
+                <div class="panel-header">
+                    <h3>Galería</h3>
+                    <button type="button" class="secondary-btn small" data-action="save-content">Guardar</button>
+                </div>
+
+                <div class="field">
+                    <label for="galleryFiles">Selecciona varias imágenes para la galería</label>
+                    <input id="galleryFiles" type="file" accept="image/*" multiple>
+                    <div id="galleryPreview" class="image-preview-grid"></div>
+                </div>
+            </section>
+
+            <section class="panel-card is-hidden" id="moto-panel" data-permission-panel="motos">
+                <div class="panel-header">
+                    <h3>Motos en venta</h3>
+                    <button type="button" id="addMotoBtn" class="primary-btn small">Agregar moto</button>
+                </div>
+
+                <div id="motoList" class="editor-list"></div>
+                <button type="button" class="secondary-btn wide" data-action="save-content">Guardar motos</button>
+            </section>
+
+            <section class="panel-card is-hidden" id="parts-panel" data-permission-panel="parts">
+                <div class="panel-header">
+                    <h3>Repuestos</h3>
+                    <button type="button" id="addPartBtn" class="primary-btn small">Agregar repuesto</button>
+                </div>
+
+                <div id="partList" class="editor-list"></div>
+                <button type="button" class="secondary-btn wide" data-action="save-content">Guardar repuestos</button>
+            </section>
+
+            <section class="panel-card is-hidden" id="team-panel" data-permission-panel="team">
+                <div class="panel-header">
+                    <h3>Nuestro equipo</h3>
+                    <button type="button" id="addTeamBtn" class="primary-btn small">Agregar integrante</button>
+                </div>
+
+                <div id="teamList" class="editor-list"></div>
+                <button type="button" class="secondary-btn wide" data-action="save-content">Guardar equipo</button>
+            </section>
+
+            <section class="panel-card is-hidden" id="news-panel" data-permission-panel="news">
+                <div class="panel-header">
+                    <h3>Noticias</h3>
+                    <button type="button" id="addNewsBtn" class="primary-btn small">Agregar noticia</button>
+                </div>
+
+                <div id="newsList" class="editor-list"></div>
+                <button type="button" class="secondary-btn wide" data-action="save-content">Guardar noticias</button>
+            </section>
+
+                <section class="panel-card data-panel-shell is-hidden" id="reset-panel" data-permission-panel="settings">
+                    <div class="data-dashboard">
+                        <div class="dashboard-heading">
+                            <div>
+                                <p class="eyebrow-admin">RESUMEN DEL SITIO</p>
+                                <h3>Dashboard</h3>
+                            </div>
+                            <span class="dashboard-status">EN VIVO</span>
+                        </div>
+                        <div class="dashboard-metrics">
+                            <div class="dashboard-metric dashboard-metric-primary">
+                                <span>Visitas del sitio</span>
+                                <strong id="adminVisitorCount">0</strong>
+                                <small>Total registrado</small>
+                            </div>
+                            <div class="dashboard-metric">
+                                <span>Motos</span>
+                                <strong id="adminMotoCount">0</strong>
+                                <small>En catálogo</small>
+                            </div>
+                            <div class="dashboard-metric">
+                                <span>Repuestos</span>
+                                <strong id="adminPartCount">0</strong>
+                                <small>Publicados</small>
+                            </div>
+                            <div class="dashboard-metric">
+                                <span>Noticias</span>
+                                <strong id="adminNewsCount">0</strong>
+                                <small>Publicadas</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="data-island workshop-island">
+                    <div class="settings-heading">
+                        <div>
+                            <p class="eyebrow-admin">CONFIGURACIÓN GENERAL</p>
+                            <h3>Información del taller</h3>
+                        </div>
+                    </div>
+
+                    <button type="button" id="toggleWorkshopSettingsBtn" class="primary-btn settings-toggle" aria-expanded="false" aria-controls="workshopSettingsEditor">Editar información del taller</button>
+
+                    <div id="workshopSettingsEditor" class="settings-editor" hidden>
+                        <div class="settings-grid">
+                        <div class="field">
+                            <label for="settingWorkshopName">Nombre del taller</label>
+                            <input id="settingWorkshopName" type="text">
+                        </div>
+                        <div class="field">
+                            <label for="settingPhone">Teléfono</label>
+                            <input id="settingPhone" type="tel">
+                        </div>
+                        <div class="field">
+                            <label for="settingWhatsappUrl">Enlace de WhatsApp</label>
+                            <input id="settingWhatsappUrl" type="url" placeholder="https://wa.me/...">
+                        </div>
+                        <div class="field">
+                            <label for="settingEmail">Correo electrónico</label>
+                            <input id="settingEmail" type="email">
+                        </div>
+                        <div class="field">
+                            <label for="settingAddress">Dirección</label>
+                            <input id="settingAddress" type="text">
+                        </div>
+                        <div class="field">
+                            <label for="settingCity">Ciudad y departamento</label>
+                            <input id="settingCity" type="text">
+                        </div>
+                        <div class="field">
+                            <label for="settingWeekdayHours">Horario entre semana</label>
+                            <input id="settingWeekdayHours" type="text">
+                        </div>
+                        <div class="field">
+                            <label for="settingSaturdayHours">Horario del sábado</label>
+                            <input id="settingSaturdayHours" type="text">
+                        </div>
+                        <div class="field">
+                            <label for="settingSundayHours">Horario del domingo</label>
+                            <input id="settingSundayHours" type="text">
+                        </div>
+                        <div class="field">
+                            <label for="settingFacebook">Facebook</label>
+                            <input id="settingFacebook" type="url" placeholder="https://facebook.com/...">
+                        </div>
+                        <div class="field">
+                            <label for="settingInstagram">Instagram</label>
+                            <input id="settingInstagram" type="url" placeholder="https://instagram.com/...">
+                        </div>
+                        <div class="field">
+                            <label for="settingTiktok">TikTok</label>
+                            <input id="settingTiktok" type="url" placeholder="https://tiktok.com/@...">
+                        </div>
+                        <div class="field field-full">
+                            <label for="settingDescription">Descripción general</label>
+                            <textarea id="settingDescription" rows="3"></textarea>
+                        </div>
+                        </div>
+
+                        <button type="button" class="secondary-btn wide" data-action="save-content">Guardar información del taller</button>
+                    </div>
+
+                    </div>
+                    <div class="data-island defaults-island">
+                    <p class="panel-description">Guarda la información actual como la nueva versión inicial del sitio.</p>
+                    <button type="button" id="saveDefaultDataBtn" class="secondary-btn wide">Guardar como datos por defecto</button>
+                    <div class="data-actions">
+                        <button type="button" id="resetDataBtn" class="ghost-btn danger">Restaurar datos por defecto</button>
+                        <button type="button" id="toggleDefaultHistoryBtn" class="secondary-btn">Listado de datos</button>
+                    </div>
+                    <div id="defaultHistory" class="default-history is-hidden"></div>
+                    </div>
+                </section>
+
+                <section class="panel-card permissions-panel is-hidden" id="permissions-panel">
+                    <div class="panel-header">
+                        <div>
+                            <p class="eyebrow-admin">CONTROL DE ACCESO</p>
+                            <h3>Permisos de administradores</h3>
+                        </div>
+                        <span class="permissions-owner">Solo Oliver</span>
+                    </div>
+
+                    <div class="permissions-island">
+                        <p class="panel-description">Activa o quita el acceso de cada administrador a las áreas del panel.</p>
+                        <button type="button" id="togglePermissionsBtn" class="primary-btn settings-toggle" aria-expanded="false" aria-controls="permissionsEditor">Editar permisos</button>
+                        <div id="permissionsEditor" hidden>
+                            <div id="permissionsList" class="permissions-list"></div>
+                            <button type="button" id="savePermissionsBtn" class="secondary-btn wide">Guardar permisos</button>
+                        </div>
+                    </div>
+
+                    <div class="administrators-island">
+                        <div class="panel-header compact-header">
+                            <div>
+                                <p class="eyebrow-admin">CUENTAS</p>
+                                <h3>Administradores</h3>
+                            </div>
+                        </div>
+                        <p class="panel-description">Modifica usuarios, contraseñas y cargos. Oliver es la cuenta principal y no puede eliminarse.</p>
+                        <button type="button" id="toggleAdminUsersBtn" class="primary-btn settings-toggle" aria-expanded="false" aria-controls="adminUsersEditor">Editar administradores</button>
+                        <div id="adminUsersEditor" hidden>
+                            <div class="admin-users-toolbar">
+                                <span>Cuentas y cargos</span>
+                                <button type="button" id="addAdminBtn" class="secondary-btn small">Agregar administrador</button>
+                            </div>
+                            <div id="adminUsersList" class="admin-users-list"></div>
+                            <button type="button" id="saveAdminUsersBtn" class="secondary-btn wide">Guardar administradores</button>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <div id="adminNotice" class="admin-notice" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="db.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
