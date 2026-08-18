@@ -460,6 +460,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             heroContainer.dataset.rendered = "true";
+            heroContainer.hidden = !data.heroImage;
         }
 
         const gallery = document.querySelector(".gallery");
@@ -477,6 +478,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .join("");
             gallery.dataset.rendered = "true";
+            gallery.hidden = false;
         }
 
         const motosGrid = document.getElementById("motosGrid");
@@ -512,6 +514,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             motosGrid.innerHTML = cardsHtml;
             motosGrid.dataset.rendered = "true";
+            motosGrid.hidden = false;
 
             if (motosCount) {
                 motosCount.textContent = data.motos.length;
@@ -546,6 +549,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             partsGrid.innerHTML = cardsHtml;
             partsGrid.dataset.rendered = "true";
+            partsGrid.hidden = false;
 
             if (partsCount) {
                 partsCount.textContent = data.parts.length;
@@ -572,6 +576,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </article>
             `).join("");
             teamGrid.dataset.rendered = "true";
+            teamGrid.hidden = false;
         }
 
         const newsGrid = document.querySelector(".news-grid");
