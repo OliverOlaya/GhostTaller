@@ -327,9 +327,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            return structuredClone(defaultSiteData);
+            return getDefaultSeedData();
         } catch (error) {
-            return structuredClone(defaultSiteData);
+            return getDefaultSeedData();
         }
     }
 
