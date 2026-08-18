@@ -701,6 +701,7 @@ async function getSiteData() {
                 const normalized = normalizeSiteData(parsed);
 
                 if (Array.isArray(normalized.motos) && Array.isArray(normalized.parts) && Array.isArray(normalized.team) && Array.isArray(normalized.news)) {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
                     return normalized;
                 }
             } catch (error) {

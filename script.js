@@ -350,6 +350,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const normalized = normalizeSiteData(parsed);
 
                     if (Array.isArray(normalized.motos) && Array.isArray(normalized.parts) && Array.isArray(normalized.team)) {
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
                         return normalized;
                     }
                 } catch (error) {
