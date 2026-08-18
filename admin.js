@@ -887,7 +887,7 @@ function renderGalleryPreview(images) {
     galleryPreview.innerHTML = safeImages.length
         ? safeImages.map((image, index) => `
             <div class="gallery-preview-item">
-                <img src="${image || defaultSiteData.galleryImages[0]}" alt="Vista previa de galería" loading="lazy">
+                <img src="${image || ""}" alt="Vista previa de galería" loading="lazy">
                 <button type="button" class="remove-gallery-btn" data-remove-gallery="${index}">Eliminar foto</button>
             </div>
         `).join("")
@@ -985,9 +985,9 @@ function renderMotoList(motos) {
                 </div>
                 <div class="field" style="grid-column: 1 / -1;">
                     <label>Selecciona imagen</label>
-                    <input type="file" accept="image/*" data-field="image" data-fallback="${escapeHtml(moto.image || defaultSiteData.motos[0].image)}">
+                    <input type="file" accept="image/*" data-field="image" data-fallback="${escapeHtml(moto.image || "")}">
                     <div class="image-preview single">
-                        <img src="${moto.image || defaultSiteData.motos[0].image}" alt="Vista previa de moto" loading="lazy">
+                        <img src="${moto.image || ""}" alt="Vista previa de moto" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -1038,9 +1038,9 @@ function renderPartList(parts) {
                 </div>
                 <div class="field" style="grid-column: 1 / -1;">
                     <label>Selecciona imagen</label>
-                    <input type="file" accept="image/*" data-field="image" data-fallback="${escapeHtml(part.image || defaultSiteData.parts[0].image)}">
+                    <input type="file" accept="image/*" data-field="image" data-fallback="${escapeHtml(part.image || "")}">
                     <div class="image-preview single">
-                        <img src="${part.image || defaultSiteData.parts[0].image}" alt="Vista previa de repuesto" loading="lazy">
+                        <img src="${part.image || ""}" alt="Vista previa de repuesto" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -1073,9 +1073,9 @@ function renderTeamList(team) {
                 </div>
                 <div class="field" style="grid-column: 1 / -1;">
                     <label>Selecciona imagen</label>
-                    <input type="file" accept="image/*" data-field="image" data-fallback="${escapeHtml(member.image || defaultSiteData.team[0].image)}">
+                    <input type="file" accept="image/*" data-field="image" data-fallback="${escapeHtml(member.image || "")}">
                     <div class="image-preview single">
-                        <img src="${member.image || defaultSiteData.team[0].image}" alt="Vista previa del equipo" loading="lazy">
+                        <img src="${member.image || ""}" alt="Vista previa del equipo" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -1290,7 +1290,7 @@ async function addMoto() {
         year: "2025",
         km: "0",
         price: "$0",
-        image: defaultSiteData.motos[0].image,
+        image: "",
         url: "https://wa.me/573001234567"
     });
     await saveSiteData(data);
@@ -1305,7 +1305,7 @@ async function addPart() {
         name: "Nuevo repuesto",
         compatibility: "Compatible con múltiples referencias",
         price: "$0",
-        image: defaultSiteData.parts[0].image,
+        image: "",
         url: "https://wa.me/573001234567"
     });
     await saveSiteData(data);
@@ -1318,7 +1318,7 @@ async function addTeamMember() {
     data.team.push({
         name: "Nuevo integrante",
         role: "Cargo del equipo",
-        image: defaultSiteData.team[0].image
+        image: ""
     });
     await saveSiteData(data);
     renderTeamList(data.team);

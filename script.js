@@ -289,24 +289,31 @@ document.addEventListener("DOMContentLoaded", () => {
             siteSettings.phone = "3143655046";
         }
 
-        const legacyHeroImage = "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=1200&q=85";
-        const heroImage = source.heroImage === legacyHeroImage ? "" : (source.heroImage || defaults.heroImage);
+        const cleanImage = (value) => {
+            if (typeof value !== "string") {
+                return "";
+            }
+
+            return value.includes("images.unsplash.com") || value.includes("i.pravatar.cc") ? "" : value;
+        };
+
+        const heroImage = cleanImage(source.heroImage || defaults.heroImage);
 
         return {
             heroImage,
             siteSettings,
             visitorCount: Number(source.visitorCount) || 0,
             galleryImages: Array.isArray(source.galleryImages)
-                ? source.galleryImages
+                ? source.galleryImages.map(cleanImage).filter(Boolean)
                 : structuredClone(defaults.galleryImages),
             motos: Array.isArray(source.motos)
-                ? source.motos
+                ? source.motos.map((item) => ({ ...item, image: cleanImage(item.image) }))
                 : structuredClone(defaults.motos),
             parts: Array.isArray(source.parts)
-                ? source.parts
+                ? source.parts.map((item) => ({ ...item, image: cleanImage(item.image) }))
                 : structuredClone(defaults.parts),
             team: Array.isArray(source.team)
-                ? source.team
+                ? source.team.map((item) => ({ ...item, image: cleanImage(item.image) }))
                 : structuredClone(defaults.team),
             news: Array.isArray(source.news)
                 ? source.news
