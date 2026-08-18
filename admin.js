@@ -477,6 +477,11 @@ const defaultSiteData = {
     ]
 };
 
+defaultSiteData.galleryImages = [];
+defaultSiteData.motos = [];
+defaultSiteData.parts = [];
+defaultSiteData.team = [];
+
 function getDefaultSeedData() {
     const seed = structuredClone(defaultSiteData);
 
