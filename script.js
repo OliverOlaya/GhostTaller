@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const STORAGE_KEY = "ghostMotorsData";
     const DEFAULT_STORAGE_KEY = "ghostMotorsDefaultData";
-    const API_BASE_URL = window.location.protocol === "file:" ? "http://localhost:3000" : "";
+    const API_BASE_URL = (window.GHOST_API_URL || (window.location.protocol === "file:" ? "http://localhost:3000" : "")).replace(/\/$/, "");
 
     async function fetchJson(path, options = {}) {
         const response = await fetch(`${API_BASE_URL}${path}`, {

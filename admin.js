@@ -4,7 +4,7 @@ const DEFAULT_STORAGE_KEY = "ghostMotorsDefaultData";
 const DEFAULT_HISTORY_KEY = "ghostMotorsDefaultHistory";
 const PERMISSIONS_STORAGE_KEY = "ghostMotorsAdminPermissions";
 const ADMIN_USERS_STORAGE_KEY = "ghostMotorsAdminUsers";
-const API_BASE_URL = window.location.protocol === "file:" ? "http://localhost:3000" : "";
+const API_BASE_URL = (window.GHOST_API_URL || (window.location.protocol === "file:" ? "http://localhost:3000" : "")).replace(/\/$/, "");
 let galleryDraftImages = [];
 let adminNoticeTimer;
 

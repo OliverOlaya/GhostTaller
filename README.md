@@ -61,3 +61,11 @@ El panel guarda hero, galería, motos, repuestos, equipo y noticias en MySQL. Si
 Cuando el sitio se ejecuta mediante `http://localhost:3000` o desde un hosting con el backend activo, la página pública y los paneles administrativos mantienen una conexión SSE con `/api/events`. Cada guardado o visita registrada notifica a los navegadores conectados y actualiza su contenido automáticamente.
 
 GitHub Pages solo puede alojar la parte estática. Para activar MySQL, login centralizado y actualización en tiempo real, la API debe estar alojada en un servicio Node.js y configurarse el frontend para usar la URL pública de esa API.
+
+Para conectar GitHub Pages con la API, edita `config.js` antes de subir los archivos:
+
+```js
+window.GHOST_API_URL = "https://tu-api-publica.example.com";
+```
+
+Sube también la carpeta `IMG` completa, incluyendo `IMG/logo.png`. La ruta y las mayúsculas deben conservarse exactamente, porque GitHub Pages distingue entre `IMG/logo.png` e `img/logo.png`.
