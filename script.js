@@ -301,6 +301,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
+            if (window.location.protocol !== "file:") {
+                try {
+                    const staticResponse = await fetch(`site-data.json?v=${Date.now()}`, { cache: "no-store" });
+
+                    if (staticResponse.ok) {
+                        const staticData = normalizeSiteData(await staticResponse.json());
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(staticData));
+                        return staticData;
+                    }
+                } catch (error) {
+                    // Continuar con la copia local del navegador.
+                }
+            }
+
             const saved = localStorage.getItem(STORAGE_KEY);
 
             if (saved) {
@@ -325,18 +339,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
                     return normalized;
                 }
-            }
-
-            try {
-                const staticResponse = await fetch("site-data.json", { cache: "no-store" });
-
-                if (staticResponse.ok) {
-                    const staticData = normalizeSiteData(await staticResponse.json());
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(staticData));
-                    return staticData;
-                }
-            } catch (error) {
-                // Continuar con los datos por defecto.
             }
 
             return getDefaultSeedData();
