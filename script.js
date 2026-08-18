@@ -267,13 +267,34 @@ document.addEventListener("DOMContentLoaded", () => {
     function normalizeSiteData(data) {
         const source = data && typeof data === "object" ? data : {};
         const defaults = getDefaultSeedData();
+        const savedSettings = source.siteSettings && typeof source.siteSettings === "object" ? source.siteSettings : {};
+        const siteSettings = {
+            ...defaults.siteSettings,
+            ...savedSettings
+        };
+
+        if (siteSettings.phone === "+57 300 123 4567") {
+            siteSettings.phone = "3143655046";
+        }
+
+        if (siteSettings.whatsappUrl === "https://wa.me/573001234567") {
+            siteSettings.whatsappUrl = "https://wa.me/573143655046";
+        }
+
+        if (siteSettings.address === "Calle 10 # 20-30") {
+            siteSettings.address = "Calle 2 10-57";
+        }
+
+        if (siteSettings.phone === "+57 3143655046") {
+            siteSettings.phone = "3143655046";
+        }
+
+        const legacyHeroImage = "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=1200&q=85";
+        const heroImage = source.heroImage === legacyHeroImage ? "" : (source.heroImage || defaults.heroImage);
 
         return {
-            heroImage: source.heroImage || defaults.heroImage,
-            siteSettings: {
-                ...defaults.siteSettings,
-                ...(source.siteSettings && typeof source.siteSettings === "object" ? source.siteSettings : {})
-            },
+            heroImage,
+            siteSettings,
             visitorCount: Number(source.visitorCount) || 0,
             galleryImages: Array.isArray(source.galleryImages)
                 ? source.galleryImages

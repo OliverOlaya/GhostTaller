@@ -1,9 +1,9 @@
 USE ghost_motors;
 
 ALTER TABLE site_settings
-    ADD COLUMN phone VARCHAR(50) NOT NULL DEFAULT '+57 300 123 4567',
-    ADD COLUMN whatsapp_url VARCHAR(255) NOT NULL DEFAULT 'https://wa.me/573001234567',
-    ADD COLUMN address VARCHAR(255) NOT NULL DEFAULT 'Calle 10 # 20-30',
+    ADD COLUMN phone VARCHAR(50) NOT NULL DEFAULT '3143655046',
+    ADD COLUMN whatsapp_url VARCHAR(255) NOT NULL DEFAULT 'https://wa.me/573143655046',
+    ADD COLUMN address VARCHAR(255) NOT NULL DEFAULT 'Calle 2 10-57',
     ADD COLUMN city VARCHAR(150) NOT NULL DEFAULT 'Neiva, Huila, Colombia',
     ADD COLUMN weekday_hours VARCHAR(150) NOT NULL DEFAULT 'Lunes - Viernes: 8:00 AM - 6:00 PM',
     ADD COLUMN saturday_hours VARCHAR(150) NOT NULL DEFAULT 'Sábados: 8:00 AM - 2:00 PM',
@@ -21,6 +21,11 @@ WHERE description IS NULL OR description = '';
 
 ALTER TABLE site_settings
     MODIFY COLUMN description TEXT NOT NULL;
+
+UPDATE site_settings
+SET phone = '3143655046',
+    whatsapp_url = 'https://wa.me/573143655046',
+    address = 'Calle 2 10-57';
 
 DELETE FROM admin_users WHERE username = 'admin';
 UPDATE admin_users SET password_hash = SHA2('marketing123', 256), full_name = 'Adriana', role = 'editor' WHERE username = 'adriana';
